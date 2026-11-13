@@ -198,11 +198,8 @@ button:focus-visible, a:focus-visible {
 .home-layout>.home{grid-column:1;direction:rtl;min-width:0}
 .home-layout>nav{grid-column:2;direction:rtl;min-width:0;position:sticky;top:18px}
 .phrase-wall{position:relative;min-height:300px;padding:8px 0 24px}
-.phrase-grid{display:flex;flex-direction:column;gap:12px;align-items:stretch;max-width:680px;margin-inline:auto}
-.phrase-card.phrase-focus{min-height:150px;font-size:1.28rem;font-weight:800;border:2px solid var(--accent);background:var(--accent-soft);box-shadow:0 14px 34px rgba(45,35,75,.16);transform:scale(1);order:0;animation:focusIn .55s ease both}
-.phrase-card.phrase-next{min-height:76px;font-size:.94rem;opacity:.68;transform:scale(.96);order:1}
-@keyframes focusIn{from{opacity:.55;transform:scale(.96) translateY(-8px)}to{opacity:1;transform:scale(1) translateY(0)}}
-.phrase-card{position:relative;display:flex;align-items:center;justify-content:center;min-height:104px;padding:18px 16px;text-align:center;line-height:1.9;font-size:1.03rem;color:var(--text);background:var(--card,rgba(200,180,230,.18));border:1px solid var(--line);box-shadow:0 8px 22px rgba(45,35,75,.07);overflow-wrap:anywhere;animation:none}
+.phrase-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:center}
+.phrase-card{position:relative;display:flex;align-items:center;justify-content:center;min-height:104px;padding:18px 16px;text-align:center;line-height:1.9;font-size:1.03rem;color:var(--text);background:var(--card,rgba(200,180,230,.18));border:1px solid var(--line);box-shadow:0 8px 22px rgba(45,35,75,.07);overflow-wrap:anywhere;animation:floatCard var(--float-time,6s) ease-in-out infinite alternate;animation-delay:var(--float-delay,0s)}
 .phrase-card:nth-child(4n+1){border-radius:24px 12px 24px 12px;transform:rotate(-1deg)}
 .phrase-card:nth-child(4n+2){border-radius:42px 18px 34px 18px;transform:rotate(1.2deg)}
 .phrase-card:nth-child(4n+3){border-radius:16px 36px 16px 36px;transform:rotate(-.6deg)}
@@ -210,8 +207,8 @@ button:focus-visible, a:focus-visible {
 .phrase-card:nth-child(3n){font-weight:700;background:var(--accent-soft)}
 .phrase-emoji{display:inline-block;margin-inline-start:8px;font-size:1.15em;white-space:nowrap}
 @keyframes floatCard{from{translate:0 0}to{translate:0 -11px}}
-@media(max-width:760px){.home-layout{grid-template-columns:1fr;gap:18px}.home-layout>nav{grid-column:1;grid-row:1;position:static}.home-layout>.home{grid-column:1;grid-row:2}.phrase-grid{display:flex;flex-direction:column;gap:10px}.phrase-card{min-height:92px;padding:13px 10px;font-size:.94rem}.phrase-wall{min-height:0}}
-@media(max-width:420px){.phrase-grid{display:flex;flex-direction:column}.phrase-card.phrase-focus{min-height:120px;font-size:1.12rem}.phrase-card.phrase-next{min-height:68px}}
+@media(max-width:760px){.home-layout{grid-template-columns:1fr;gap:18px}.home-layout>nav{grid-column:1;grid-row:1;position:static}.home-layout>.home{grid-column:1;grid-row:2}.phrase-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.phrase-card{min-height:92px;padding:13px 10px;font-size:.94rem}.phrase-wall{min-height:0}}
+@media(max-width:420px){.phrase-grid{grid-template-columns:1fr}.phrase-card{min-height:76px}}
 @media(prefers-reduced-motion:reduce){.phrase-card{animation:none!important}}
 
 .topmenu{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:10px}
@@ -447,21 +444,23 @@ document.querySelectorAll('.topbtn').forEach(function(b){
     {text:'كل القلوب التي احتوت القرآن أزهرت.',emoji:'💐'},
     {text:'لن تذبل روح صار لها القرآن سقيًا.',emoji:'✨💧'}
   ];
-  // Rotating phrase focus: each page opening advances to the next phrase.
-  var phraseIndex=0;
-  try { phraseIndex=Number(localStorage.getItem('academyPhraseIndex')||'0'); if(!Number.isFinite(phraseIndex)||phraseIndex<0) phraseIndex=0; } catch(e) {}
+  function shuffledPhrases(){
+    var a=PHRASES.slice();
+    for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}
+    return a;
+  }
   function renderPhrases(target){
     target.innerHTML='';
-    for(var i=0;i<3;i++){
-      var item=PHRASES[(phraseIndex+i)%PHRASES.length];
-      var card=document.createElement('div');
-      card.className='phrase-card'+(i===0?' phrase-focus':' phrase-next');
-      var words=document.createElement('span'); words.textContent=item.text; words.style.whiteSpace='pre-line';
-      var emoji=document.createElement('span'); emoji.className='phrase-emoji'; emoji.textContent=item.emoji; emoji.setAttribute('aria-hidden','true');
-      card.appendChild(words); card.appendChild(emoji); target.appendChild(card);
-    }
-    phraseIndex=(phraseIndex+1)%PHRASES.length;
-    try { localStorage.setItem('academyPhraseIndex',String(phraseIndex)); } catch(e) {}
+    var shuffled=shuffledPhrases();
+    var count=2+Math.floor(Math.random()*2);
+    shuffled.slice(0,count).forEach(function(item,i){
+      var card=document.createElement('div');card.className='phrase-card';
+      card.style.setProperty('--float-delay',(-Math.random()*5).toFixed(2)+'s');
+      card.style.setProperty('--float-time',(5+Math.random()*3).toFixed(2)+'s');
+      var words=document.createElement('span');words.textContent=item.text;words.style.whiteSpace='pre-line';
+      var emoji=document.createElement('span');emoji.className='phrase-emoji';emoji.textContent=item.emoji;emoji.setAttribute('aria-hidden','true');
+      card.appendChild(words);card.appendChild(emoji);target.appendChild(card);
+    });
   }
   var homePhrases=document.getElementById('homePhrases');
   if(homePhrases)renderPhrases(homePhrases);
