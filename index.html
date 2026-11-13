@@ -193,19 +193,23 @@ button:focus-visible, a:focus-visible {
   * { transition: none !important; }
 }
 
-/* phrase shapes */
-.home{position:relative}
-.home p{position:relative;padding:14px 18px;margin:14px 0;border-radius:18px;background:rgba(200,180,230,.18);border:1px solid rgba(150,120,200,.35);animation:rise .9s ease both}
-.home p:nth-child(2){animation-delay:.2s}.home p:nth-child(3){animation-delay:.4s}.home p:nth-child(4){animation-delay:.6s}
-.home p::before,.home p::after{content:"✦";position:absolute;color:#9b7fc4;font-size:14px;animation:twinkle 2.4s ease-in-out infinite}
-.home p::before{top:-8px;right:12px}.home p::after{bottom:-8px;left:12px;animation-delay:1.2s}
-.home .verse-main{font-weight:700;background:rgba(200,180,230,.3)}
-.home::after{content:"";position:absolute;width:120px;height:120px;border-radius:30%;border:2px dashed rgba(155,127,196,.4);bottom:-30px;right:-20px;animation:spin 18s linear infinite}
-@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-@keyframes twinkle{0%,100%{opacity:.25;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
-@keyframes drift{from{transform:translate(0,0)}to{transform:translate(30px,20px)}}
-@keyframes spin{to{transform:rotate(360deg)}}
-@media (prefers-reduced-motion:reduce){.home p,.home p::before,.home p::after,.home::before,.home::after{animation:none}}
+/* Floating phrase cards and two-column academy home */
+.home-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(270px,34%);gap:24px;align-items:start;direction:ltr}
+.home-layout>.home{grid-column:1;direction:rtl;min-width:0}
+.home-layout>nav{grid-column:2;direction:rtl;min-width:0;position:sticky;top:18px}
+.phrase-wall{position:relative;min-height:300px;padding:8px 0 24px}
+.phrase-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:center}
+.phrase-card{position:relative;display:flex;align-items:center;justify-content:center;min-height:104px;padding:18px 16px;text-align:center;line-height:1.9;font-size:1.03rem;color:var(--text);background:var(--card,rgba(200,180,230,.18));border:1px solid var(--line);box-shadow:0 8px 22px rgba(45,35,75,.07);overflow-wrap:anywhere;animation:floatCard var(--float-time,6s) ease-in-out infinite alternate;animation-delay:var(--float-delay,0s)}
+.phrase-card:nth-child(4n+1){border-radius:24px 12px 24px 12px;transform:rotate(-1deg)}
+.phrase-card:nth-child(4n+2){border-radius:42px 18px 34px 18px;transform:rotate(1.2deg)}
+.phrase-card:nth-child(4n+3){border-radius:16px 36px 16px 36px;transform:rotate(-.6deg)}
+.phrase-card:nth-child(4n){border-radius:28px 28px 10px 28px;transform:rotate(.8deg)}
+.phrase-card:nth-child(3n){font-weight:700;background:var(--accent-soft)}
+.phrase-emoji{display:inline-block;margin-inline-start:8px;font-size:1.15em;white-space:nowrap}
+@keyframes floatCard{from{translate:0 0}to{translate:0 -11px}}
+@media(max-width:760px){.home-layout{grid-template-columns:1fr;gap:18px}.home-layout>nav{grid-column:1;grid-row:1;position:static}.home-layout>.home{grid-column:1;grid-row:2}.phrase-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.phrase-card{min-height:92px;padding:13px 10px;font-size:.94rem}.phrase-wall{min-height:0}}
+@media(max-width:420px){.phrase-grid{grid-template-columns:1fr}.phrase-card{min-height:76px}}
+@media(prefers-reduced-motion:reduce){.phrase-card{animation:none!important}}
 
 .topmenu{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:10px}
 .topword{font-size:13px;padding:6px 12px;border-radius:999px;background:rgba(200,180,230,.25);border:1px solid rgba(150,120,200,.35);cursor:default}
@@ -213,8 +217,11 @@ button:focus-visible, a:focus-visible {
 .topbtn:active{transform:scale(.97)}
 
 .subpage{display:none}
-.subpage.on{display:block}
-body.paged .home,body.paged nav[aria-label="الأقسام"]{display:none}
+.subpage.on{display:grid;grid-template-columns:minmax(0,1fr) minmax(270px,34%);gap:24px;align-items:start;direction:ltr}
+.subpage .phrase-wall{grid-column:1;direction:rtl;min-width:0}
+.subpage .subcontent{grid-column:2;direction:rtl;min-width:0}
+@media(max-width:760px){.subpage.on{grid-template-columns:1fr;gap:16px}.subpage .phrase-wall{grid-column:1;grid-row:2}.subpage .subcontent{grid-column:1;grid-row:1}}
+body.paged .home-layout{display:none}
 .backbtn{font:inherit;padding:8px 16px;border-radius:999px;border:1px solid rgba(150,120,200,.5);background:transparent;color:inherit;cursor:pointer;margin:14px 0}
 .subpage h2{margin:8px 0 14px}
 .subitem{all:unset;cursor:pointer;display:flex;justify-content:space-between;width:100%;box-sizing:border-box}
@@ -259,12 +266,10 @@ a.qbtn{text-decoration:none;display:inline-block;line-height:1.6}
 </header>
 
 <main class="wrap">
-  <section class="home" aria-label="الرئيسية">
-    <p>أنت البناء لهذه الأمة ،<br>ومن كان بناء عليه ألا يستريح</p>
-    <p>بدايته مُحب ونهايته مُجاز</p>
-    <p class="verse-main">أنتم حملة الراية<br>والراية لا تحملها اليد الضعيفة</p>
-    <p>إن عزمت فبادر، وإن هممت فثابر</p>
-  </section>
+  <div class="home-layout">
+    <section class="home phrase-wall" aria-label="عبارات ملهمة">
+      <div class="phrase-grid" id="homePhrases"></div>
+    </section>
 
   <nav aria-label="الأقسام">
     <h2 class="section">الأقسام</h2>
@@ -316,6 +321,7 @@ a.qbtn{text-decoration:none;display:inline-block;line-height:1.6}
       </div>
     </div>
   </nav>
+  </div>
 </main>
 
 <footer>
@@ -426,14 +432,49 @@ document.querySelectorAll('.topbtn').forEach(function(b){
   var wrap=document.createElement('section');
   wrap.className='subpage';wrap.id='subpage';wrap.setAttribute('aria-live','polite');
   document.querySelector('main.wrap').appendChild(wrap);
+  var PHRASES=[
+    {text:'أنت البناء لهذه الأمة، ومن كان بناءً عليه ألا يستريح.',emoji:'🏛️'},
+    {text:'بدايته تعب ونهايته فوز.',emoji:'🌱'},
+    {text:'أنتم حملة الراية، والراية لا تحملها اليد الضعيفة.',emoji:'🏳️'},
+    {text:'إن عزمت فبادر، وإن هممت فثابر.',emoji:'🔥'},
+    {text:'..... والأنس كل الأنس بالقرآن.',emoji:'🤍'},
+    {text:'القرآن كالصاحب، كلما طالت الصحبة عرفت أسراره.',emoji:'📖'},
+    {text:'تمضي الحياة وأنت تطلب أنسها، والأنس كل الأنس في القرآن.',emoji:'🌙'},
+    {text:'اقرأ وارتقِ، فإن منزلتك عند آخر آية تقرؤها.',emoji:'⬆️'},
+    {text:'إذا بعثرتك الحياة فرتّبها بالقرآن.',emoji:'🧩'},
+    {text:'كل القلوب التي احتوت القرآن أزهرت.',emoji:'💐'},
+    {text:'لن تذبل روح صار لها القرآن سقيًا.',emoji:'✨💧'}
+  ];
+  function shuffledPhrases(){
+    var a=PHRASES.slice();
+    for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}
+    return a;
+  }
+  function renderPhrases(target){
+    target.innerHTML='';
+    shuffledPhrases().forEach(function(item,i){
+      var card=document.createElement('div');card.className='phrase-card';
+      card.style.setProperty('--float-delay',(-Math.random()*5).toFixed(2)+'s');
+      card.style.setProperty('--float-time',(5+Math.random()*3).toFixed(2)+'s');
+      var words=document.createElement('span');words.textContent=item.text;
+      var emoji=document.createElement('span');emoji.className='phrase-emoji';emoji.textContent=item.emoji;emoji.setAttribute('aria-hidden','true');
+      card.appendChild(words);card.appendChild(emoji);target.appendChild(card);
+    });
+  }
+  var homePhrases=document.getElementById('homePhrases');
+  if(homePhrases)renderPhrases(homePhrases);
   function openSub(title){
     wrap.innerHTML='';
+    var phraseSide=document.createElement('section');phraseSide.className='phrase-wall';phraseSide.setAttribute('aria-label','عبارات ملهمة');
+    var phraseGrid=document.createElement('div');phraseGrid.className='phrase-grid';phraseSide.appendChild(phraseGrid);renderPhrases(phraseGrid);
+    var content=document.createElement('section');content.className='subcontent';
     var back=document.createElement('button');back.type='button';back.className='backbtn';back.textContent='رجوع للرئيسية';
     back.addEventListener('click',function(){document.body.classList.remove('paged');wrap.classList.remove('on');window.scrollTo(0,0);});
     var h=document.createElement('h2');h.textContent=title;
     var p=document.createElement('p');p.textContent='قريبًا';
-    wrap.appendChild(back);wrap.appendChild(h);
-    if(title==='قالون'){renderQaloon(wrap);}else{wrap.appendChild(p);}
+    content.appendChild(back);content.appendChild(h);
+    if(title==='قالون'){renderQaloon(content);}else{content.appendChild(p);}
+    wrap.appendChild(phraseSide);wrap.appendChild(content);
     document.body.classList.add('paged');wrap.classList.add('on');
     window.scrollTo(0,0);
   }
