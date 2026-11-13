@@ -437,9 +437,8 @@ document.querySelectorAll('.topbtn').forEach(function(b){
     {text:'بدايته تعب ونهايته فوز.',emoji:'🌱'},
     {text:'أنتم حملة الراية، والراية لا تحملها اليد الضعيفة.',emoji:'🏳️'},
     {text:'إن عزمت فبادر، وإن هممت فثابر.',emoji:'🔥'},
-    {text:'..... والأنس كل الأنس بالقرآن.',emoji:'🤍'},
     {text:'القرآن كالصاحب، كلما طالت الصحبة عرفت أسراره.',emoji:'📖'},
-    {text:'تمضي الحياة وأنت تطلب أنسها، والأنس كل الأنس في القرآن.',emoji:'🌙'},
+    {text:'تمضي الحياة وأنت تطلب أُنسها...\nوالأُنس كل الأُنسِ بالقرءان',emoji:'🤍'},
     {text:'اقرأ وارتقِ، فإن منزلتك عند آخر آية تقرؤها.',emoji:'⬆️'},
     {text:'إذا بعثرتك الحياة فرتّبها بالقرآن.',emoji:'🧩'},
     {text:'كل القلوب التي احتوت القرآن أزهرت.',emoji:'💐'},
@@ -452,11 +451,13 @@ document.querySelectorAll('.topbtn').forEach(function(b){
   }
   function renderPhrases(target){
     target.innerHTML='';
-    shuffledPhrases().forEach(function(item,i){
+    var shuffled=shuffledPhrases();
+    var count=2+Math.floor(Math.random()*2);
+    shuffled.slice(0,count).forEach(function(item,i){
       var card=document.createElement('div');card.className='phrase-card';
       card.style.setProperty('--float-delay',(-Math.random()*5).toFixed(2)+'s');
       card.style.setProperty('--float-time',(5+Math.random()*3).toFixed(2)+'s');
-      var words=document.createElement('span');words.textContent=item.text;
+      var words=document.createElement('span');words.textContent=item.text;words.style.whiteSpace='pre-line';
       var emoji=document.createElement('span');emoji.className='phrase-emoji';emoji.textContent=item.emoji;emoji.setAttribute('aria-hidden','true');
       card.appendChild(words);card.appendChild(emoji);target.appendChild(card);
     });
