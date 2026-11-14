@@ -30,13 +30,35 @@
           "id": "tuhfa",
           "title": "تحفة الأطفال",
           "visible": true,
-          "chapters": []
+          "chapters": [
+            {
+              "title": "التحفة الشيخ أيمن السويد",
+              "lessons": [
+                {
+                  "title": "محاضرة جديدة",
+                  "youtube": "https://youtu.be/OMG0BfqSWAc",
+                  "pdf": ""
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "jazariya",
           "title": "الجزرية",
           "visible": true,
-          "chapters": []
+          "chapters": [
+            {
+              "title": "الجزرية الشيخ أيمن السويد",
+              "lessons": [
+                {
+                  "title": "محاضرة جديدة",
+                  "youtube": "",
+                  "pdf": ""
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "shatibiyya",
@@ -70,18 +92,36 @@
           "chapters": [
             {
               "id": "qaloon-1",
-              "title": "الاستعاذة والبسملة",
-              "lessons": []
+              "title": " قالون 1 : الاستعاذة والبسملة ",
+              "lessons": [
+                {
+                  "title": "محاضرة جديدة",
+                  "youtube": "https://youtu.be/P7xs8P-xiJs",
+                  "pdf": ""
+                }
+              ]
             },
             {
               "id": "qaloon-2",
-              "title": "صلة ميم الجمع، والفتح والإمالة",
-              "lessons": []
+              "title": "قالون2. باب صلة ميم الجمع، والفتح والإمالة",
+              "lessons": [
+                {
+                  "title": "محاضرة جديدة",
+                  "youtube": "https://youtu.be/P7xs8P-xiJs",
+                  "pdf": ""
+                }
+              ]
             },
             {
               "id": "qaloon-3",
-              "title": "المد والقصر ومعه لفظ أنا",
-              "lessons": []
+              "title": "قالون3. باب المد والقصر ومعه لفظ أنا، باب النون الساكنة والتنوين، باب التقاء الساكنين، التحريرات",
+              "lessons": [
+                {
+                  "title": "محاضرة جديدة",
+                  "youtube": "https://youtu.be/nnBvjUmSLEQ",
+                  "pdf": ""
+                }
+              ]
             }
           ]
         }
