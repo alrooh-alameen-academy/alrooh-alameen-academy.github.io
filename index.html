@@ -193,23 +193,22 @@ button:focus-visible, a:focus-visible {
   * { transition: none !important; }
 }
 
-/* Floating phrase cards and two-column academy home */
+/* Sequential focus phrases, gentle floating stars and two-column academy home */
 .home-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(270px,34%);gap:24px;align-items:start;direction:ltr}
 .home-layout>.home{grid-column:1;direction:rtl;min-width:0}
 .home-layout>nav{grid-column:2;direction:rtl;min-width:0;position:sticky;top:18px}
 .phrase-wall{position:relative;min-height:300px;padding:8px 0 24px}
-.phrase-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:center}
-.phrase-card{position:relative;display:flex;align-items:center;justify-content:center;min-height:104px;padding:18px 16px;text-align:center;line-height:1.9;font-size:1.03rem;color:var(--text);background:var(--card,rgba(200,180,230,.18));border:1px solid var(--line);box-shadow:0 8px 22px rgba(45,35,75,.07);overflow-wrap:anywhere;animation:floatCard var(--float-time,6s) ease-in-out infinite alternate;animation-delay:var(--float-delay,0s)}
-.phrase-card:nth-child(4n+1){border-radius:24px 12px 24px 12px;transform:rotate(-1deg)}
-.phrase-card:nth-child(4n+2){border-radius:42px 18px 34px 18px;transform:rotate(1.2deg)}
-.phrase-card:nth-child(4n+3){border-radius:16px 36px 16px 36px;transform:rotate(-.6deg)}
-.phrase-card:nth-child(4n){border-radius:28px 28px 10px 28px;transform:rotate(.8deg)}
-.phrase-card:nth-child(3n){font-weight:700;background:var(--accent-soft)}
+.phrase-grid{display:flex;flex-direction:column;gap:13px;align-items:stretch}
+.phrase-card{position:relative;isolation:isolate;display:flex;align-items:center;justify-content:center;min-height:76px;padding:14px 18px;text-align:center;line-height:1.9;font-size:.98rem;color:var(--text);background:var(--card,rgba(200,180,230,.18));border:1px solid var(--line);box-shadow:0 8px 22px rgba(45,35,75,.07);overflow:hidden;overflow-wrap:anywhere;border-radius:22px 12px 22px 12px;animation:floatCard var(--float-time,6s) ease-in-out infinite alternate;animation-delay:var(--float-delay,0s);transition:transform .55s ease,opacity .55s ease,background .55s ease}
+.phrase-card.focus{min-height:142px;font-size:1.17rem;font-weight:700;background:var(--accent-soft);border-width:2px;box-shadow:0 12px 28px rgba(45,35,75,.12);border-radius:30px 14px 30px 14px}
+.phrase-card.secondary{opacity:.82;transform:scale(.96);min-height:78px}
 .phrase-emoji{display:inline-block;margin-inline-start:8px;font-size:1.15em;white-space:nowrap}
-@keyframes floatCard{from{translate:0 0}to{translate:0 -11px}}
-@media(max-width:760px){.home-layout{grid-template-columns:1fr;gap:18px}.home-layout>nav{grid-column:1;grid-row:1;position:static}.home-layout>.home{grid-column:1;grid-row:2}.phrase-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.phrase-card{min-height:92px;padding:13px 10px;font-size:.94rem}.phrase-wall{min-height:0}}
-@media(max-width:420px){.phrase-grid{grid-template-columns:1fr}.phrase-card{min-height:76px}}
-@media(prefers-reduced-motion:reduce){.phrase-card{animation:none!important}}
+.phrase-star{position:absolute;z-index:-1;color:var(--accent);opacity:0;pointer-events:none;animation:twinkleFloat var(--star-duration,4s) ease-in-out infinite;animation-delay:var(--star-delay,0s);font-size:var(--star-size,11px)}
+@keyframes floatCard{from{translate:0 0}to{translate:0 -5px}}
+@keyframes twinkleFloat{0%,100%{opacity:0;transform:translateY(5px) scale(.65) rotate(0deg)}35%{opacity:.58}65%{opacity:.2;transform:translateY(-13px) scale(1) rotate(35deg)}}
+@media(max-width:760px){.home-layout{grid-template-columns:1fr;gap:18px}.home-layout>nav{grid-column:1;grid-row:1;position:static}.home-layout>.home{grid-column:1;grid-row:2}.phrase-card.focus{min-height:125px;font-size:1.08rem}.phrase-wall{min-height:0}}
+@media(max-width:420px){.phrase-card{padding:12px 13px}.phrase-card.focus{min-height:116px}}
+@media(prefers-reduced-motion:reduce){.phrase-card,.phrase-star{animation:none!important}.phrase-star{opacity:.25}}
 
 .topmenu{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:10px}
 .topword{font-size:13px;padding:6px 12px;border-radius:999px;background:rgba(200,180,230,.25);border:1px solid rgba(150,120,200,.35);cursor:default}
@@ -253,8 +252,8 @@ a.qbtn{text-decoration:none;display:inline-block;line-height:1.6}
 <header class="top">
   <div class="wrap">
     <div class="brand">
-      <h1>أكاديمية الروح الأمين</h1>
-      <p>للإقراء والمحافظة على القراءات</p>
+      <h1 id="academyTitle">أكاديمية الروح الأمين</h1>
+      <p id="academyTagline">للإقراء والمحافظة على القراءات</p>
     </div>
     <div class="topmenu" aria-hidden="true">
       <span class="topword">حفظ</span>
@@ -273,53 +272,7 @@ a.qbtn{text-decoration:none;display:inline-block;line-height:1.6}
 
   <nav aria-label="الأقسام">
     <h2 class="section">الأقسام</h2>
-
-    <div class="acc-item">
-      <h3 class="acc-head">
-        <button type="button" class="acc-btn" aria-expanded="false" aria-controls="p-tajweed" id="b-tajweed">
-          <span>دورات التجويد</span>
-          <span class="chev" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
-        </button>
-      </h3>
-      <div class="acc-panel" id="p-tajweed" role="region" aria-labelledby="b-tajweed" hidden>
-        <ul>
-          <li><button type="button" class="subitem" data-sub="دورة التجويد الأولى"><span>دورة التجويد الأولى</span><span class="soon">قريبًا</span></button></li>
-          <li><button type="button" class="subitem" data-sub="دورة التجويد الثانية"><span>دورة التجويد الثانية</span><span class="soon">قريبًا</span></button></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="acc-item">
-      <h3 class="acc-head">
-        <button type="button" class="acc-btn" aria-expanded="false" aria-controls="p-matoon" id="b-matoon">
-          <span>المتون</span>
-          <span class="chev" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
-        </button>
-      </h3>
-      <div class="acc-panel" id="p-matoon" role="region" aria-labelledby="b-matoon" hidden>
-        <ul>
-          <li><button type="button" class="subitem" data-sub="تحفة الأطفال"><span>تحفة الأطفال</span><span class="soon">قريبًا</span></button></li>
-          <li><button type="button" class="subitem" data-sub="الجزرية"><span>الجزرية</span><span class="soon">قريبًا</span></button></li>
-          <li><button type="button" class="subitem" data-sub="الشاطبية"><span>الشاطبية</span><span class="soon">قريبًا</span></button></li>
-          <li><button type="button" class="subitem" data-sub="أيام الهمة"><span>أيام الهمة</span><span class="soon">قريبًا</span></button></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="acc-item">
-      <h3 class="acc-head">
-        <button type="button" class="acc-btn" aria-expanded="false" aria-controls="p-qiraat" id="b-qiraat">
-          <span>القراءات</span>
-          <span class="chev" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
-        </button>
-      </h3>
-      <div class="acc-panel" id="p-qiraat" role="region" aria-labelledby="b-qiraat" hidden>
-        <ul>
-          <li><button type="button" class="subitem" data-sub="شعبة"><span>شعبة</span><span class="soon">قريبًا</span></button></li>
-          <li><button type="button" class="subitem" data-sub="قالون"><span>قالون</span><span class="soon">قريبًا</span></button></li>
-        </ul>
-      </div>
-    </div>
+    <div id="dynamicSections"></div>
   </nav>
   </div>
 </main>
@@ -385,103 +338,31 @@ document.querySelectorAll('.topbtn').forEach(function(b){
 
 <script>
 (function(){
-
-    var QALOON=["الاستعاذة والبسملة", "صلة ميم الجمع، والفتح والإمالة", "المد والقصر ومعه لفظ أنا", "النون الساكنة والتنوين", "التقاء الساكنين", "التحريرات", "ورقمهم"];
-
-    // ── المحاضرات ── الصقي روابطك هنا، محاضرة في كل سطر:
-    // chapter: اسم الفصل بالضبط كما هو في القائمة فوق
-    // title: عنوان المحاضرة | youtube: رابط يوتيوب (غير مدرج) | drive: رابط ملف Google Drive
-    var LECTURES=[
-      // { chapter: "الاستعاذة والبسملة", title: "المحاضرة الأولى", youtube: "https://youtu.be/XXXXXXXX", drive: "https://drive.google.com/file/d/XXXXXXXX/view?usp=sharing" },
-    ];
-    function driveDownload(u){var m=u.match(/\/d\/([\w-]+)/)||u.match(/[?&]id=([\w-]+)/);return m?'https://drive.google.com/uc?export=download&id='+m[1]:u;}
-    function renderQaloon(wrap){
-      var box=document.createElement('div');box.className='qlist';
-      QALOON.forEach(function(t,idx){
-        var item=document.createElement('div');item.className='qitem';
-        var tb=document.createElement('button');tb.type='button';tb.className='qtitle';tb.textContent=t;
-        var pan=document.createElement('div');pan.className='qpanel';pan.hidden=true;
-        var vb=document.createElement('button');vb.type='button';vb.className='qbtn';vb.textContent='فيديو الشرح';
-        var fb=document.createElement('button');fb.type='button';fb.className='qbtn';fb.textContent='الملفات';
-        var area=document.createElement('div');area.className='qarea';
-        vb.addEventListener('click',function(){
-          area.innerHTML='';
-          if(idx===0){var v=document.createElement('video');v.controls=true;v.playsInline=true;v.preload='metadata';v.src='qaloon-1.mp4';v.className='qvideo';area.appendChild(v);}
-          else{var s=document.createElement('p');s.textContent='قريبًا';area.appendChild(s);}
-        });
-        fb.addEventListener('click',function(){area.innerHTML='';var s=document.createElement('p');s.textContent='قريبًا';area.appendChild(s);});
-        pan.appendChild(vb);pan.appendChild(fb);pan.appendChild(area);
-        tb.addEventListener('click',function(){pan.hidden=!pan.hidden;});
-        var lecs=LECTURES.filter(function(L){return L.chapter===t;});
-        if(lecs.length){
-          var list=document.createElement('div');list.className='lecs';
-          lecs.forEach(function(L){
-            var row=document.createElement('div');row.className='lec';
-            var name=document.createElement('span');name.className='lec-title';name.textContent=L.title;
-            var btns=document.createElement('div');btns.className='lec-btns';
-            if(L.youtube){var w=document.createElement('a');w.className='qbtn';w.href=L.youtube;w.target='_blank';w.rel='noopener';w.textContent='مشاهدة';btns.appendChild(w);}
-            if(L.drive){var d=document.createElement('a');d.className='qbtn';d.href=driveDownload(L.drive);d.target='_blank';d.rel='noopener';d.textContent='تحميل';btns.appendChild(d);}
-            row.appendChild(name);row.appendChild(btns);list.appendChild(row);
-          });
-          pan.appendChild(list);
-        }
-        item.appendChild(tb);item.appendChild(pan);box.appendChild(item);
-      });
-      wrap.appendChild(box);
-    }
-  var wrap=document.createElement('section');
-  wrap.className='subpage';wrap.id='subpage';wrap.setAttribute('aria-live','polite');
-  document.querySelector('main.wrap').appendChild(wrap);
-  var PHRASES=[
+  'use strict';
+  var API='https://alrooh-academy-admin.rawaasafwat2007.workers.dev/?public=1';
+  var fallbackPhrases=[
     {text:'أنت البناء لهذه الأمة، ومن كان بناءً عليه ألا يستريح.',emoji:'🏛️'},
     {text:'بدايته تعب ونهايته فوز.',emoji:'🌱'},
     {text:'أنتم حملة الراية، والراية لا تحملها اليد الضعيفة.',emoji:'🏳️'},
     {text:'إن عزمت فبادر، وإن هممت فثابر.',emoji:'🔥'},
     {text:'القرآن كالصاحب، كلما طالت الصحبة عرفت أسراره.',emoji:'📖'},
-    {text:'تمضي الحياة وأنت تطلب أُنسها...\nوالأُنس كل الأُنسِ بالقرءان',emoji:'🤍'},
+    {text:'تمضي الحياة وأنت تطلب أُنسها... والأُنس كل الأُنسِ بالقرءان',emoji:'🤍'},
     {text:'اقرأ وارتقِ، فإن منزلتك عند آخر آية تقرؤها.',emoji:'⬆️'},
     {text:'إذا بعثرتك الحياة فرتّبها بالقرآن.',emoji:'🧩'},
     {text:'كل القلوب التي احتوت القرآن أزهرت.',emoji:'💐'},
     {text:'لن تذبل روح صار لها القرآن سقيًا.',emoji:'✨💧'}
   ];
-  function shuffledPhrases(){
-    var a=PHRASES.slice();
-    for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}
-    return a;
-  }
-  function renderPhrases(target){
-    target.innerHTML='';
-    var shuffled=shuffledPhrases();
-    var count=2+Math.floor(Math.random()*2);
-    shuffled.slice(0,count).forEach(function(item,i){
-      var card=document.createElement('div');card.className='phrase-card';
-      card.style.setProperty('--float-delay',(-Math.random()*5).toFixed(2)+'s');
-      card.style.setProperty('--float-time',(5+Math.random()*3).toFixed(2)+'s');
-      var words=document.createElement('span');words.textContent=item.text;words.style.whiteSpace='pre-line';
-      var emoji=document.createElement('span');emoji.className='phrase-emoji';emoji.textContent=item.emoji;emoji.setAttribute('aria-hidden','true');
-      card.appendChild(words);card.appendChild(emoji);target.appendChild(card);
-    });
-  }
-  var homePhrases=document.getElementById('homePhrases');
-  if(homePhrases)renderPhrases(homePhrases);
-  function openSub(title){
-    wrap.innerHTML='';
-    var phraseSide=document.createElement('section');phraseSide.className='phrase-wall';phraseSide.setAttribute('aria-label','عبارات ملهمة');
-    var phraseGrid=document.createElement('div');phraseGrid.className='phrase-grid';phraseSide.appendChild(phraseGrid);renderPhrases(phraseGrid);
-    var content=document.createElement('section');content.className='subcontent';
-    var back=document.createElement('button');back.type='button';back.className='backbtn';back.textContent='رجوع للرئيسية';
-    back.addEventListener('click',function(){document.body.classList.remove('paged');wrap.classList.remove('on');window.scrollTo(0,0);});
-    var h=document.createElement('h2');h.textContent=title;
-    var p=document.createElement('p');p.textContent='قريبًا';
-    content.appendChild(back);content.appendChild(h);
-    if(title==='قالون'){renderQaloon(content);}else{content.appendChild(p);}
-    wrap.appendChild(phraseSide);wrap.appendChild(content);
-    document.body.classList.add('paged');wrap.classList.add('on');
-    window.scrollTo(0,0);
-  }
-  document.querySelectorAll('.subitem').forEach(function(b){
-    b.addEventListener('click',function(){openSub(b.getAttribute('data-sub'));});
-  });
+  var data={phrases:fallbackPhrases,sections:[],settings:{showPhrases:true,showDownloads:true}};
+  var phraseIndexKey='academyPhraseIndex';
+  function phraseStart(){var n=0;try{n=parseInt(localStorage.getItem(phraseIndexKey)||'0',10)||0;localStorage.setItem(phraseIndexKey,String((n+1)%Math.max(1,data.phrases.length)));}catch(e){}return n%Math.max(1,data.phrases.length);}
+  function renderPhrases(target){if(!target)return;target.innerHTML='';var list=(data.phrases&&data.phrases.length?data.phrases:fallbackPhrases);if(!data.settings||data.settings.showPhrases===false){target.hidden=true;return;}target.hidden=false;var start=phraseStart();for(var i=0;i<Math.min(3,list.length);i++){var item=list[(start+i)%list.length];var card=document.createElement('div');card.className='phrase-card '+(i===0?'focus':'secondary');card.style.setProperty('--float-delay',(-Math.random()*3).toFixed(2)+'s');card.style.setProperty('--float-time',(5+Math.random()*2).toFixed(2)+'s');var words=document.createElement('span');words.textContent=item.text||'';var emoji=document.createElement('span');emoji.className='phrase-emoji';emoji.textContent=item.emoji||'';emoji.setAttribute('aria-hidden','true');card.appendChild(words);card.appendChild(emoji);[['12%','18%'],['82%','22%'],['22%','78%'],['91%','72%']].forEach(function(pos,j){var star=document.createElement('span');star.className='phrase-star';star.textContent=j%2?'✦':'✧';star.style.top=pos[1];star.style.left=pos[0];star.style.setProperty('--star-delay',(Math.random()*4).toFixed(2)+'s');star.style.setProperty('--star-duration',(3.5+Math.random()*2.5).toFixed(2)+'s');star.style.setProperty('--star-size',(8+Math.random()*7).toFixed(0)+'px');card.appendChild(star);});target.appendChild(card);}}
+  var wrap=document.createElement('section');wrap.className='subpage';wrap.id='subpage';wrap.setAttribute('aria-live','polite');document.querySelector('main.wrap').appendChild(wrap);
+  function makeLink(url,label,download){if(!url)return null;var a=document.createElement('a');a.className='qbtn';a.href=url;a.target='_blank';a.rel='noopener';a.textContent=label;if(download)a.setAttribute('download','');return a;}
+  function renderItem(item,container){var box=document.createElement('div');box.className='qitem';var title=document.createElement('button');title.type='button';title.className='qtitle';title.textContent=item.title||'باب';var panel=document.createElement('div');panel.className='qpanel';panel.hidden=true;title.addEventListener('click',function(){panel.hidden=!panel.hidden;});(item.chapters||[]).filter(function(x){return x.visible!==false;}).forEach(function(ch){var chapter=document.createElement('div');chapter.className='qitem';var ct=document.createElement('button');ct.type='button';ct.className='qtitle';ct.textContent=ch.title||'وحدة';var cp=document.createElement('div');cp.className='qpanel';cp.hidden=true;ct.addEventListener('click',function(){cp.hidden=!cp.hidden;});(ch.lessons||[]).forEach(function(lesson){var row=document.createElement('div');row.className='lec';var name=document.createElement('span');name.className='lec-title';name.textContent=lesson.title||'محاضرة';row.appendChild(name);var btns=document.createElement('div');btns.className='lec-btns';var y=makeLink(lesson.youtube,'مشاهدة');var pdf=makeLink(lesson.pdf||lesson.drive,'تحميل');if(y)btns.appendChild(y);if(pdf&&data.settings.showDownloads!==false)btns.appendChild(pdf);row.appendChild(btns);cp.appendChild(row);});if(!(ch.lessons||[]).length){var p=document.createElement('p');p.textContent='ستُضاف المحاضرات قريبًا.';cp.appendChild(p);}chapter.appendChild(ct);chapter.appendChild(cp);panel.appendChild(chapter);});if(!(item.chapters||[]).length){var p=document.createElement('p');p.textContent='ستُضاف المواد قريبًا.';panel.appendChild(p);}box.appendChild(title);box.appendChild(panel);container.appendChild(box);}
+  function openSub(item){wrap.innerHTML='';var phraseSide=document.createElement('section');phraseSide.className='phrase-wall';phraseSide.setAttribute('aria-label','عبارات ملهمة');var grid=document.createElement('div');grid.className='phrase-grid';phraseSide.appendChild(grid);renderPhrases(grid);var content=document.createElement('section');content.className='subcontent';var back=document.createElement('button');back.type='button';back.className='backbtn';back.textContent='رجوع للرئيسية';back.addEventListener('click',function(){document.body.classList.remove('paged');wrap.classList.remove('on');window.scrollTo(0,0);});var h=document.createElement('h2');h.textContent=item.title||'';content.appendChild(back);content.appendChild(h);(item.chapters||[]).filter(function(c){return c.visible!==false;}).forEach(function(ch){renderItem(ch,content);});if(!(item.chapters||[]).length){var p=document.createElement('p');p.textContent='قريبًا';content.appendChild(p);}wrap.appendChild(phraseSide);wrap.appendChild(content);document.body.classList.add('paged');wrap.classList.add('on');window.scrollTo(0,0);}
+  function renderNav(){var root=document.getElementById('dynamicSections');if(!root)return;root.innerHTML='';(data.sections||[]).filter(function(s){return s.visible!==false;}).forEach(function(section,si){var box=document.createElement('div');box.className='acc-item';var head=document.createElement('h3');head.className='acc-head';var btn=document.createElement('button');btn.type='button';btn.className='acc-btn';btn.setAttribute('aria-expanded','false');var id='academy-panel-'+si;btn.setAttribute('aria-controls',id);var label=document.createElement('span');label.textContent=section.title||'قسم';var chev=document.createElement('span');chev.className='chev';chev.setAttribute('aria-hidden','true');chev.textContent='⌄';btn.appendChild(label);btn.appendChild(chev);head.appendChild(btn);var panel=document.createElement('div');panel.className='acc-panel';panel.id=id;panel.hidden=true;panel.setAttribute('role','region');var ul=document.createElement('ul');(section.items||[]).filter(function(x){return x.visible!==false;}).forEach(function(item){var li=document.createElement('li');var sub=document.createElement('button');sub.type='button';sub.className='subitem';var span=document.createElement('span');span.textContent=item.title||'عنصر';sub.appendChild(span);sub.addEventListener('click',function(){openSub(item);});li.appendChild(sub);ul.appendChild(li);});panel.appendChild(ul);btn.addEventListener('click',function(){var opening=btn.getAttribute('aria-expanded')!=='true';root.querySelectorAll('.acc-btn').forEach(function(other){other.setAttribute('aria-expanded','false');var p=document.getElementById(other.getAttribute('aria-controls'));if(p)p.hidden=true;});btn.setAttribute('aria-expanded',opening?'true':'false');panel.hidden=!opening;});box.appendChild(head);box.appendChild(panel);root.appendChild(box);});}
+  async function loadContent(){try{var response=await fetch(API,{cache:'no-store'});if(!response.ok)throw new Error('HTTP '+response.status);var result=await response.json();if(result&&result.data)data=result.data;else if(result&&result.sections)data=result;if(!Array.isArray(data.phrases))data.phrases=fallbackPhrases;if(!data.settings)data.settings={};}catch(e){console.warn('تعذر تحميل المحتوى المنشور، سيتم عرض المحتوى الافتراضي.',e);}var title=document.getElementById('academyTitle'),tag=document.getElementById('academyTagline');if(title&&data.siteTitle)title.textContent=data.siteTitle;if(tag&&data.tagline)tag.textContent=data.tagline;renderNav();renderPhrases(document.getElementById('homePhrases'));}
+  loadContent();
 })();
 </script>
 </body>
