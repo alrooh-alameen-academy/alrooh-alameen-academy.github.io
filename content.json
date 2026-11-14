@@ -2,21 +2,136 @@
   "siteTitle": "أكاديمية الروح الأمين",
   "tagline": "للإقراء والمحافظة على القراءات",
   "sections": [
-    {"id":"tajweed","title":"دورات التجويد","visible":true,"items":[{"id":"tajweed-1","title":"دورة التجويد الأولى","visible":true,"chapters":[]},{"id":"tajweed-2","title":"دورة التجويد الثانية","visible":true,"chapters":[]}]},
-    {"id":"matoon","title":"المتون","visible":true,"items":[{"id":"tuhfa","title":"تحفة الأطفال","visible":true,"chapters":[]},{"id":"jazariya","title":"الجزرية","visible":true,"chapters":[]},{"id":"shatibiyya","title":"الشاطبية","visible":true,"chapters":[]},{"id":"ayam","title":"أيام الهمة","visible":true,"chapters":[]}]},
-    {"id":"qiraat","title":"القراءات","visible":true,"items":[{"id":"shuba","title":"شعبة","visible":true,"chapters":[]},{"id":"qaloon","title":"قالون","visible":true,"chapters":[{"id":"qaloon-1","title":"الاستعاذة والبسملة","lessons":[]},{"id":"qaloon-2","title":"صلة ميم الجمع، والفتح والإمالة","lessons":[]},{"id":"qaloon-3","title":"المد والقصر ومعه لفظ أنا","lessons":[]},{"id":"qaloon-4","title":"النون الساكنة والتنوين","lessons":[]},{"id":"qaloon-5","title":"التقاء الساكنين","lessons":[]},{"id":"qaloon-6","title":"التحريرات","lessons":[]},{"id":"qaloon-7","title":"ورقمهم","lessons":[]}]}]}
+    {
+      "id": "tajweed",
+      "title": "دورات التجويد",
+      "visible": true,
+      "items": [
+        {
+          "id": "tajweed-1",
+          "title": "دورة التجويد الأولى",
+          "visible": true,
+          "chapters": []
+        },
+        {
+          "id": "tajweed-2",
+          "title": "دورة التجويد الثانية",
+          "visible": true,
+          "chapters": []
+        }
+      ]
+    },
+    {
+      "id": "matoon",
+      "title": "المتون",
+      "visible": true,
+      "items": [
+        {
+          "id": "tuhfa",
+          "title": "تحفة الأطفال",
+          "visible": true,
+          "chapters": []
+        },
+        {
+          "id": "jazariya",
+          "title": "الجزرية",
+          "visible": true,
+          "chapters": []
+        },
+        {
+          "id": "shatibiyya",
+          "title": "الشاطبية",
+          "visible": true,
+          "chapters": []
+        },
+        {
+          "id": "ayam",
+          "title": "أيام الهمة",
+          "visible": true,
+          "chapters": []
+        }
+      ]
+    },
+    {
+      "id": "qiraat",
+      "title": "القراءات",
+      "visible": true,
+      "items": [
+        {
+          "id": "shuba",
+          "title": "شعبة",
+          "visible": true,
+          "chapters": []
+        },
+        {
+          "id": "qaloon",
+          "title": "قالون",
+          "visible": true,
+          "chapters": [
+            {
+              "id": "qaloon-1",
+              "title": "الاستعاذة والبسملة",
+              "lessons": []
+            },
+            {
+              "id": "qaloon-2",
+              "title": "صلة ميم الجمع، والفتح والإمالة",
+              "lessons": []
+            },
+            {
+              "id": "qaloon-3",
+              "title": "المد والقصر ومعه لفظ أنا",
+              "lessons": []
+            }
+          ]
+        }
+      ]
+    }
   ],
   "phrases": [
-    {"text":"أنت البناء لهذه الأمة، ومن كان بناءً عليه ألا يستريح.","emoji":"🏛️"},
-    {"text":"بدايته تعب ونهايته فوز.","emoji":"🌱"},
-    {"text":"أنتم حملة الراية، والراية لا تحملها اليد الضعيفة.","emoji":"🏳️"},
-    {"text":"إن عزمت فبادر، وإن هممت فثابر.","emoji":"🔥"},
-    {"text":"القرآن كالصاحب، كلما طالت الصحبة عرفت أسراره.","emoji":"📖"},
-    {"text":"تمضي الحياة وأنت تطلب أُنسها... والأُنس كل الأُنسِ بالقرءان","emoji":"🤍"},
-    {"text":"اقرأ وارتقِ، فإن منزلتك عند آخر آية تقرؤها.","emoji":"⬆️"},
-    {"text":"إذا بعثرتك الحياة فرتّبها بالقرآن.","emoji":"🧩"},
-    {"text":"كل القلوب التي احتوت القرآن أزهرت.","emoji":"💐"},
-    {"text":"لن تذبل روح صار لها القرآن سقيًا.","emoji":"✨💧"}
+    {
+      "text": "أنت البناء لهذه الأمة، ومن كان بناءً عليه ألا يستريح.",
+      "emoji": "🏛️"
+    },
+    {
+      "text": "بدايته تعب ونهايته فوز.",
+      "emoji": "🌱"
+    },
+    {
+      "text": "أنتم حملة الراية، والراية لا تحملها اليد الضعيفة.",
+      "emoji": "🏳️"
+    },
+    {
+      "text": "إن عزمت فبادر، وإن هممت فثابر.",
+      "emoji": "🔥"
+    },
+    {
+      "text": "القرآن كالصاحب، كلما طالت الصحبة عرفت أسراره.",
+      "emoji": "📖"
+    },
+    {
+      "text": "تمضي الحياة وأنت تطلب أُنسها... والأُنس كل الأُنسِ بالقرءان",
+      "emoji": "🤍"
+    },
+    {
+      "text": "اقرأ وارتقِ، فإن منزلتك عند آخر آية تقرؤها.",
+      "emoji": "⬆️"
+    },
+    {
+      "text": "إذا بعثرتك الحياة فرتّبها بالقرآن.",
+      "emoji": "🧩"
+    },
+    {
+      "text": "كل القلوب التي احتوت القرآن أزهرت.",
+      "emoji": "💐"
+    },
+    {
+      "text": "لن تذبل روح صار لها القرآن سقيًا.",
+      "emoji": "✨💧"
+    }
   ],
-  "settings": {"showDownloads":true,"showPhrases":true}
+  "settings": {
+    "showDownloads": true,
+    "showPhrases": true
+  }
 }
