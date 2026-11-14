@@ -233,19 +233,33 @@ if('serviceWorker' in navigator){window.addEventListener('load',function(){navig
 </script>
 
 <style>
-.qlist{display:flex;flex-direction:column;gap:10px;margin-top:8px}
-.qitem{background:rgba(255,255,255,.7);border-radius:14px;padding:10px 12px}
-.qtitle{width:100%;text-align:right;background:none;border:0;font:inherit;font-size:1.05rem;padding:6px 2px;color:inherit;cursor:pointer}
-.qpanel{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
-.qbtn{border:1px solid currentColor;background:transparent;border-radius:999px;padding:6px 14px;font:inherit;cursor:pointer;color:inherit}
+/* Comfortable mauve cards for every level of the academy */
+:root{--tile:rgba(111,91,166,.13);--tile-soft:rgba(111,91,166,.075);--tile-border:rgba(111,91,166,.25)}
+[data-theme="night"]{--tile:rgba(185,167,232,.16);--tile-soft:rgba(185,167,232,.09);--tile-border:rgba(185,167,232,.28)}
+.acc-item{background:var(--tile);border-color:var(--tile-border);border-radius:19px;margin-bottom:18px;box-shadow:0 7px 20px rgba(45,35,75,.07)}
+.acc-panel{padding:8px 10px 10px}
+.acc-panel li{background:var(--tile-soft);border:1px solid var(--tile-border);border-radius:15px;margin:8px 0;padding:13px 15px;min-height:58px}
+.acc-panel li:last-child{border-bottom:1px solid var(--tile-border)}
+.qlist{display:flex;flex-direction:column;gap:15px;margin-top:12px}
+.qitem{position:relative;isolation:isolate;overflow:hidden;background:var(--tile);border:1px solid var(--tile-border);border-radius:21px;padding:15px 16px;margin:0 0 17px;box-shadow:0 9px 23px rgba(45,35,75,.09)}
+.qitem:before,.qitem:after{content:'✦';position:absolute;z-index:0;pointer-events:none;color:var(--accent);opacity:0;animation:chapterTwinkle 4.8s ease-in-out infinite}
+.qitem:before{top:9px;left:15px;font-size:15px;animation-delay:.3s}
+.qitem:after{content:'✧';right:18px;bottom:8px;font-size:19px;animation-delay:2s}
+@keyframes chapterTwinkle{0%,100%{opacity:0;transform:translateY(5px) scale(.7) rotate(0)}40%{opacity:.55}70%{opacity:.18;transform:translateY(-9px) scale(1) rotate(28deg)}}
+.qtitle{position:relative;z-index:1;width:100%;text-align:right;background:transparent;border:0;font:inherit;font-size:1.08rem;font-weight:700;padding:7px 3px;color:inherit;cursor:pointer}
+.qpanel{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:12px;margin-top:12px}
+.qbtn{border:1px solid var(--tile-border);background:var(--tile-soft);border-radius:999px;padding:7px 15px;font:inherit;cursor:pointer;color:inherit}
 .qarea{width:100%}
-.qvideo{width:100%;border-radius:12px;margin-top:8px}
+.qvideo{width:100%;border-radius:14px;margin-top:10px}
 .qpanel[hidden]{display:none}
-.lecs{width:100%;display:flex;flex-direction:column;gap:6px;margin-top:6px}
-.lec{width:100%;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;padding:8px 0;border-top:1px dashed var(--line)}
-.lec-title{flex:1 1 100%;font-size:1rem}
-.lec-btns{display:flex;gap:8px;flex-wrap:wrap}
+.lecs{width:100%;display:flex;flex-direction:column;gap:13px;margin-top:10px}
+.lec{position:relative;width:100%;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:14px;background:var(--tile-soft);border:1px solid var(--tile-border);border-radius:17px}
+.lec-title{flex:1 1 100%;font-size:1.02rem;font-weight:700}
+.ui-video{display:block;flex:1 1 100%;width:100%;max-width:100%;aspect-ratio:16/9;height:clamp(190px,56.25vw,420px);min-height:190px;border:0;border-radius:15px;background:#211a32;margin:8px 0 4px;box-shadow:0 7px 18px rgba(25,18,40,.15)}
+.lec-btns{display:flex;gap:9px;flex-wrap:wrap}
 a.qbtn{text-decoration:none;display:inline-block;line-height:1.6}
+@media(max-width:480px){.qitem{padding:13px;border-radius:18px}.lec{padding:12px}.ui-video{min-height:180px}}
+@media(prefers-reduced-motion:reduce){.qitem:before,.qitem:after{animation:none;opacity:.22}}
 </style>
 </head>
 <body>
