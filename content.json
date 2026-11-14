@@ -11,7 +11,18 @@
           "id": "tajweed-1",
           "title": "دورة التجويد الأولى",
           "visible": true,
-          "chapters": []
+          "chapters": [
+            {
+              "title": "منهج التجويد كاملا",
+              "lessons": [
+                {
+                  "title": ".. ",
+                  "youtube": "",
+                  "pdf": "https://drive.google.com/file/d/1ENxpzE3kFIQPDP3eAL_pYkbGK9_q_HpJ/view?usp=drivesdk"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "tajweed-2",
